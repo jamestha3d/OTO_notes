@@ -1,0 +1,12 @@
+version: '3.8'
+
+services: 
+  web:
+    build: .
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "8000:8000"
+    image: rt_tech_apis
+    container_name: oto_container
+    command: ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
