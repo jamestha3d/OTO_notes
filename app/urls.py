@@ -25,7 +25,7 @@ schema_view = get_schema_view(
    openapi.Info(
       title="Notes API",
       default_version='v1',
-      description="This is a simple Notes API",
+      description="This is a simple Notes API. All endpoints shown below require the prefix of /api/. e.g localhost:8000/api/all_notes/",
 
    ),
    public=True,
