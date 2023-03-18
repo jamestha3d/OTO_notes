@@ -45,17 +45,6 @@ def index(request):
 
 
 
-""" token = openapi.Parameter('token', openapi.IN_FORM, type=openapi.TYPE_STRING, required=True)
-something = openapi.Parameter('something', openapi.IN_FORM, type=openapi.TYPE_INTEGER, required=False)
-@swagger_auto_schema(
-    method="post",
-    manual_parameters=[token, something],
-    operation_id="/v2/token_api"
-)
-@api_view(['POST'])
- """
-
-
 @swagger_auto_schema(
     method='get',
     operation_summary="List user notes",
@@ -64,11 +53,11 @@ something = openapi.Parameter('something', openapi.IN_FORM, type=openapi.TYPE_IN
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getNotes(request):
-    #note = {'title': 'note1', 'body': 'some text', 'tags': 'this is some tags'}
     user = request.user
     notes = user.user_notes.all()
     serializer = NoteSerializer(notes, many=True)
     return Response(serializer.data)
+
 
 @swagger_auto_schema(
     method='get',
@@ -89,6 +78,7 @@ def getNote(request, pk):
         }
         return Response(data=response,status=status.HTTP_400_BAD_REQUEST)
 
+
 @swagger_auto_schema(
     method='get',
     operation_summary="List all public notes",
@@ -102,6 +92,7 @@ def getPublicNotes(request):
     notes = Note.objects.all().filter(public = True)
     serializer = NoteSerializer(notes, many=True)
     return Response(serializer.data)
+
 
 @swagger_auto_schema(
     method='post',
@@ -140,6 +131,7 @@ def addNote(request):
     }
     return Response(data=response, status=status.HTTP_201_CREATED)
 
+
 @swagger_auto_schema(
     method='delete',
     operation_summary="Delete note",
@@ -162,6 +154,7 @@ def deleteNote(request, pk):
             "message": "You do not have authority to delete this note"
         }
         return Response(data=response, status=status.HTTP_401_UNAUTHORIZED)
+
 
 @swagger_auto_schema(
     method='post',
@@ -194,6 +187,7 @@ def updateNote(request, pk):
         }
         return Response(data=response, status=status.HTTP_401_UNAUTHORIZED)
 
+
 @swagger_auto_schema(
     method='get',
     operation_summary="Filter notes",
@@ -220,7 +214,8 @@ def filterNotes(request, pk):
             "message": "Invalid Tag"
         }
         return Response(data=response, status=status.HTTP_400_BAD_REQUEST)
-    
+
+
 @swagger_auto_schema(
     method='get',
     operation_summary="Search notes with keyword",
@@ -239,6 +234,7 @@ def search(request, keyword):
         }
         return Response(data=response, status=status.HTTP_400_BAD_REQUEST)
     pass
+
 
 
 class SignUpView(generics.GenericAPIView):
@@ -260,6 +256,7 @@ class SignUpView(generics.GenericAPIView):
             }
             return Response(data=response, status=status.HTTP_201_CREATED)
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class LoginView(APIView):
     permission_classes = []

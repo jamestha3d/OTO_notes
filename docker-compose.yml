@@ -1,12 +1,8 @@
-version: '3.8'
+version: '3.9'
 
-services: 
-  web:
+services:
+  django:
+    image: django-docker:0.0.1
     build: .
-    volumes:
-      - .:/usr/src/app
     ports:
       - "8000:8000"
-    image: rt_tech_apis
-    container_name: oto_container
-    command: ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
